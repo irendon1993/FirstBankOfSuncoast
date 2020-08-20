@@ -95,19 +95,25 @@ namespace FirstBankOfSuncoast
                 }
                 if (choice == "WITHDRAW")
                 {
+                    Console.WriteLine("Do you want to withdraw from your checkings? YES or NO");
+                    //   var answer = Console.ReadLine();
+                    //   if(answer == "YES")
+                    //   {
+                    //     withdrawAmount = linq
+                    //   }
+                    // }
+                    if (choice == "DEPOSIT")
+                    {
 
-                }
-                if (choice == "DEPOSIT")
-                {
+                    }
+                    if (choice == "QUIT")
+                    {
 
-                }
-                if (choice == "QUIT")
-                {
-
-                }
-                else
-                {
-                    Console.WriteLine("Goodbye");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Goodbye");
+                    }
                 }
             }
         }
