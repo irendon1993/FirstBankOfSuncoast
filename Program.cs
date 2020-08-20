@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FirstBankOfSuncoast
 {
@@ -15,21 +17,27 @@ namespace FirstBankOfSuncoast
     //         SavingsAccountBalance =
     //   }
     // }
+    // 
+    // 
+    // 
+    // Compute balances by examining all the transactions in the history
+    class Transaction
+    {
+        public string Name { get; set; }
+        public int ChangeOfBalance { get; set; }
 
-    // class Transsaction 
-    //     (
-    //       Transactions = new List<Transsaction>
-    //       {
+        public string TransactionHistory()
+        {
+            var transactionHistory = $"{Name} for {ChangeOfBalance}";
+            return transactionHistory;
+        }
 
-    //       }
-    //     )
+    }
     class Program
     {
         // PROBLEM
         // 
         // Create a console app that allows a user to manage savings and checking banking transactions.
-        // A user will make a series of transactions.
-        // You will compute balances by examining all the transactions in the history
         // The transactions will be saved in a file, using a CSV format to record the data.
 
         // Example
@@ -56,8 +64,6 @@ namespace FirstBankOfSuncoast
         // CheckingAccount
         // SavingsAccount 
         // Create a MENU
-        // Make option to VIEW balance
-        // Make option to WITHDRAW 
         // Make option to DEPOSIT
         // 
         // 
@@ -68,12 +74,27 @@ namespace FirstBankOfSuncoast
 
         static void Main(string[] args)
         {
+
+            // Create a list to to track transfers
+            var deposits = new List<Transaction>()
+            {
+              new Transaction
+              {
+                Name = "Deposit",
+                ChangeOfBalance = 10
+
+              },
+
+              new Transaction
+              {
+                Name = "Deposit",
+                ChangeOfBalance = 10,
+              }
+
+            };
+
+
             Console.WriteLine("Welcome to Wutang Financial");
-
-            // var transactions = new List<Customer>
-            // {
-
-            // }
 
             var hasQuitTheApplication = false;
 
@@ -89,33 +110,59 @@ namespace FirstBankOfSuncoast
                 Console.Write("Choice: ");
                 var choice = Console.ReadLine();
 
-                if (choice == "VIEW")
+                // if (choice == "VIEW")
+                // {
+                //     foreach (var transaction in transactions)
+                //     {
+                //         Console.WriteLine(transaction.Balance());
+                //     }
+                // }
+                // Make option to WITHDRAW 
+                if (choice == "DEPOSIT")
                 {
-                    Console.WriteLine("hello");
+                    Console.WriteLine("Do you want to deposit from your checkings? YES or NO");
+                    var answer = Console.ReadLine();
+                    if (answer == "YES")
+                    {
+                        Console.WriteLine("How much would you like to deposit");
+                        var withdrawAmount = Console.ReadLine();
+
+                        var newTransaction = new Transaction
+                        {
+                            Name = "Withdraw",
+                            ChangeOfBalance = int.Parse(withdrawAmount)
+                        };
+                        deposits.Add(newTransaction);
+                    }
                 }
-                if (choice == "WITHDRAW")
+                if (choice == "Balance")
                 {
-                    Console.WriteLine("Do you want to withdraw from your checkings? YES or NO");
-                    //   var answer = Console.ReadLine();
-                    //   if(answer == "YES")
-                    //   {
-                    //     withdrawAmount = linq
-                    //   }
-                    // }
-                    if (choice == "DEPOSIT")
+                    Console.WriteLine("Do you want to check your Checking Account?");
+                    var answer = Console.ReadLine();
+                    if (answer == "YES")
                     {
-
-                    }
-                    if (choice == "QUIT")
-                    {
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("Goodbye");
+                        foreach (var deposit in deposits)
+                        {
+                            Console.WriteLine(deposit.TransactionHistory());
+                        }
                     }
                 }
+
+
+
+
             }
         }
+
+
+        // if (choice == "BALAnce")
+        // {
+
+        // }
+        // else
+        // {
+        //     Console.WriteLine("Goodbye");
+        // }
     }
 }
+
