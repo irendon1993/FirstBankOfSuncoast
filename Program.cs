@@ -70,12 +70,12 @@ namespace FirstBankOfSuncoast
         {
             Console.WriteLine("Welcome to Wutang Financial");
 
-            var transactions = new List<Customer>
-            {
+            // var transactions = new List<Customer>
+            // {
 
-            }
+            // }
 
-              var hasQuitTheApplication = false;
+            var hasQuitTheApplication = false;
 
             while (hasQuitTheApplication == false)
             {
@@ -89,10 +89,11 @@ namespace FirstBankOfSuncoast
                 Console.Write("Choice: ");
                 var choice = Console.ReadLine();
 
-                if (choice == VIEW)
+                if (choice == "VIEW")
                 {
-
+                    Console.WriteLine("hello");
                 }
             }
         }
     }
+}
