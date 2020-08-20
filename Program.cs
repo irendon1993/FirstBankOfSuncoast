@@ -2,19 +2,27 @@
 
 namespace FirstBankOfSuncoast
 {
-    // Create a Customer class
-    class Customer
-    {
-        CheckingAccount()
-        {
-            CheckingAccountBalance =
-        }
+    // // Create a Customer class
+    // class Customer
+    // {
+    //     CheckingAccount()
+    //     {
+    //         CheckingAccountBalance =
+    //     }
 
-        SavingsAccount()
-        {
-            SavingsAccountBalance =
-      }
-    }
+    //     SavingsAccount()
+    //     {
+    //         SavingsAccountBalance =
+    //   }
+    // }
+
+    // class Transsaction 
+    //     (
+    //       Transactions = new List<Transsaction>
+    //       {
+
+    //       }
+    //     )
     class Program
     {
         // PROBLEM
@@ -60,7 +68,31 @@ namespace FirstBankOfSuncoast
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to C#");
+            Console.WriteLine("Welcome to Wutang Financial");
+
+            var transactions = new List<Customer>
+            {
+
+            }
+
+              var hasQuitTheApplication = false;
+
+            while (hasQuitTheApplication == false)
+            {
+                // Show them a menu of options they can do
+                Console.WriteLine("Select an option from the Menu below:");
+                Console.WriteLine("VIEW - View the dinosaurs we have in the order in which they got here!");
+                Console.WriteLine("WITHDRAW - Take out money from your accounts");
+                Console.WriteLine("DEPOSIT - Place money in your accounts");
+                Console.WriteLine("QUIT - Quit the program!");
+                Console.WriteLine();
+                Console.Write("Choice: ");
+                var choice = Console.ReadLine();
+
+                if (choice == VIEW)
+                {
+
+                }
+            }
         }
     }
-}
