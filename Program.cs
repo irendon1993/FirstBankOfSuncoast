@@ -93,6 +93,22 @@ namespace FirstBankOfSuncoast
                 {
                     Console.WriteLine("hello");
                 }
+                if (choice == "WITHDRAW")
+                {
+
+                }
+                if (choice == "DEPOSIT")
+                {
+
+                }
+                if (choice == "QUIT")
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("Goodbye");
+                }
             }
         }
     }
