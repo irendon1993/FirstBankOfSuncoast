@@ -26,11 +26,11 @@ namespace FirstBankOfSuncoast
         public string Name { get; set; }
         public int ChangeOfBalance { get; set; }
 
-        public string TransactionHistory()
-        {
-            var transactionHistory = $"{Name} for {ChangeOfBalance}";
-            return transactionHistory;
-        }
+        // public string Balance()
+        // {
+        //     var transactionHistory = $"{Name} for {ChangeOfBalance}";
+        //     return transactionHistory;
+        // }
 
     }
     class Program
@@ -72,26 +72,39 @@ namespace FirstBankOfSuncoast
         // 
         //         
 
+        //   public string = Transaction
+        // {
+        //  ; 
+        // }
+
+
+
+
+
         static void Main(string[] args)
         {
 
+            var checkingAccountBalance = 0;
+            var savingsAccountBalance = 0;
             // Create a list to to track transfers
-            var deposits = new List<Transaction>()
-            {
-              new Transaction
-              {
-                Name = "Deposit",
-                ChangeOfBalance = 10
+            var transactions = new List<Transaction>();
+            // var withdraws = new List<Transaction>();
 
-              },
 
-              new Transaction
-              {
-                Name = "Deposit",
-                ChangeOfBalance = 10,
-              }
+            // {
+            // new Transaction
+            // {
+            //   Name = "Deposit",
+            //   ChangeOfBalance = 10
 
-            };
+            // },
+
+            // new Transaction
+            // {
+            //   Name = "Deposit",
+            //   ChangeOfBalance = 10,
+            // }
+            // };
 
 
             Console.WriteLine("Welcome to Wutang Financial");
@@ -102,7 +115,7 @@ namespace FirstBankOfSuncoast
             {
                 // Show them a menu of options they can do
                 Console.WriteLine("Select an option from the Menu below:");
-                Console.WriteLine("VIEW - View the dinosaurs we have in the order in which they got here!");
+                Console.WriteLine("VIEW - View the transaction history");
                 Console.WriteLine("WITHDRAW - Take out money from your accounts");
                 Console.WriteLine("DEPOSIT - Place money in your accounts");
                 Console.WriteLine("QUIT - Quit the program!");
@@ -117,52 +130,67 @@ namespace FirstBankOfSuncoast
                 //         Console.WriteLine(transaction.Balance());
                 //     }
                 // }
-                // Make option to WITHDRAW 
-                if (choice == "DEPOSIT")
-                {
-                    Console.WriteLine("Do you want to deposit from your checkings? YES or NO");
-                    var answer = Console.ReadLine();
-                    if (answer == "YES")
-                    {
-                        Console.WriteLine("How much would you like to deposit");
-                        var withdrawAmount = Console.ReadLine();
 
-                        var newTransaction = new Transaction
-                        {
-                            Name = "Withdraw",
-                            ChangeOfBalance = int.Parse(withdrawAmount)
-                        };
-                        deposits.Add(newTransaction);
-                    }
+                // Make option to DEPOSIT 
+                if (choice == "DEPOSIT")
+                    // {
+                    Console.WriteLine("Please select which account to deposit into, CHECKING or SAVINGS");
+                var answer = Console.ReadLine();
+                if (answer == "CHECKING")
+                {
+                    Console.WriteLine("How much would you like to deposit");
+                    var depositAmount = Console.ReadLine();
+
+                    var newTransaction = new Transaction
+                    {
+                        Name = "Deposit",
+                        ChangeOfBalance = int.Parse(depositAmount)
+                    };
+                    var newCheckingAccountBalance = checkingAccountBalance + newTransaction.ChangeOfBalance;
+                    checkingAccountBalance = newCheckingAccountBalance;
+                    Console.WriteLine(checkingAccountBalance);
+                    transactions.Add(newTransaction);
                 }
+                if (answer == "SAVINGS")
+                {
+                    Console.WriteLine("How much would you like to deposit”");
+                    var depositAmount = Console.ReadLine();
+                    var newTransaction = new Transaction
+                    {
+                        Name = "Deposit",
+                        ChangeOfBalance = int.Parse(depositAmount)
+                    };
+                    var newSavingsAccountBalance = savingsAccountBalance + newTransaction.ChangeOfBalance;
+                    savingsAccountBalance = newSavingsAccountBalance;
+                    Console.WriteLine(savingsAccountBalance);
+                    transactions.Add(newTransaction);
+                }
+
                 if (choice == "Balance")
                 {
                     Console.WriteLine("Do you want to check your Checking Account?");
-                    var answer = Console.ReadLine();
-                    if (answer == "YES")
-                    {
-                        foreach (var deposit in deposits)
-                        {
-                            Console.WriteLine(deposit.TransactionHistory());
-                        }
-                    }
+                    // var answer = Console.ReadLine();
+                    // if (answer == "YES")
+                    // {
+                    //     foreach (var deposit in deposits)
+                    //     {
+                    //         Console.WriteLine(deposit.TransactionHistory());
+                    //         var totalAccount = deposits.Aggregate(0, currentTotal);
+                    //     }
                 }
-
-
-
-
             }
         }
-
-
-        // if (choice == "BALAnce")
-        // {
-
-        // }
-        // else
-        // {
-        //     Console.WriteLine("Goodbye");
-        // }
     }
+
+
+    // if (choice == "BALAnce")
+    // {
+
+    // }
+    // else
+    // {
+    //     Console.WriteLine("Goodbye");
+    // }
 }
+
 
