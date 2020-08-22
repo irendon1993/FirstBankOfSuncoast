@@ -88,8 +88,8 @@ namespace FirstBankOfSuncoast
             var checkingAccountBalance = 0;
             var savingsAccountBalance = 0;
             // Create a list to to track transfers
-            var transactions = new List<Transaction>();
-            // var withdraws = new List<Transaction>();
+            var checkingTransactions = new List<Transaction>();
+            var savingsTransactions = new List<Transaction>();
 
 
             // {
@@ -130,12 +130,20 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine("Please select which account you would like to view the transcation history of, CHECKING or SAVINGS");
                     var answer = Console.ReadLine();
                     if (answer == "CHECKING")
-
-                        foreach (var transaction in transactions)
+                    {
+                        foreach (var transaction in checkingTransactions)
                         {
-                            var checkingAccountHistory = transactions.Where(transaction => transaction == "")
-    
+                            Console.WriteLine(transaction.TransactionHistory());
 
+                        }
+                    }
+                    if (answer == "SAVINGS")
+                    {
+                        foreach (var transaction in savingsTransactions)
+                        {
+                            Console.WriteLine(transaction.TransactionHistory());
+
+                        }
                     }
                 }
 
@@ -158,7 +166,7 @@ namespace FirstBankOfSuncoast
                         var newCheckingAccountBalance = checkingAccountBalance + newTransaction.ChangeOfBalance;
                         checkingAccountBalance = newCheckingAccountBalance;
                         Console.WriteLine(checkingAccountBalance);
-                        transactions.Add(newTransaction);
+                        checkingTransactions.Add(newTransaction);
                     }
                     if (answer == "SAVINGS")
                     {
@@ -173,7 +181,7 @@ namespace FirstBankOfSuncoast
                         var newSavingsAccountBalance = savingsAccountBalance + newTransaction.ChangeOfBalance;
                         savingsAccountBalance = newSavingsAccountBalance;
                         Console.WriteLine(savingsAccountBalance);
-                        transactions.Add(newTransaction);
+                        savingsTransactions.Add(newTransaction);
                     }
                 }
                 if (choice == "WITHDRAW")
@@ -198,7 +206,7 @@ namespace FirstBankOfSuncoast
                             var newCheckingAccountBalance = checkingAccountBalance - newTransaction.ChangeOfBalance;
                             checkingAccountBalance = newCheckingAccountBalance;
                             Console.WriteLine(checkingAccountBalance);
-                            transactions.Add(newTransaction);
+                            checkingTransactions.Add(newTransaction);
                         }
                         else
                         {
@@ -223,7 +231,7 @@ namespace FirstBankOfSuncoast
                             var newSavingsAccountBalance = savingsAccountBalance - newTransaction.ChangeOfBalance;
                             savingsAccountBalance = newSavingsAccountBalance;
                             Console.WriteLine(savingsAccountBalance);
-                            transactions.Add(newTransaction);
+                            savingsTransactions.Add(newTransaction);
                         }
                     }
                 }
