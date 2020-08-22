@@ -23,14 +23,15 @@ namespace FirstBankOfSuncoast
     // Compute balances by examining all the transactions in the history
     class Transaction
     {
-        public string Name { get; set; }
+        public string TransactionType { get; set; }
+        public string AccountType { get; set; }
         public int ChangeOfBalance { get; set; }
 
-        // public string Balance()
-        // {
-        //     var transactionHistory = $"{Name} for {ChangeOfBalance}";
-        //     return transactionHistory;
-        // }
+        public string TransactionHistory()
+        {
+            var transactionHistory = $"{TransactionType} for {ChangeOfBalance}";
+            return transactionHistory;
+        }
 
     }
     class Program
@@ -118,18 +119,25 @@ namespace FirstBankOfSuncoast
                 Console.WriteLine("VIEW - View the transaction history");
                 Console.WriteLine("WITHDRAW - Take out money from your accounts");
                 Console.WriteLine("DEPOSIT - Place money in your accounts");
+                Console.WriteLine("BALANCE- View the balance of your accounts");
                 Console.WriteLine("QUIT - Quit the program!");
                 Console.WriteLine();
                 Console.Write("Choice: ");
                 var choice = Console.ReadLine();
 
-                // if (choice == "VIEW")
-                // {
-                //     foreach (var transaction in transactions)
-                //     {
-                //         Console.WriteLine(transaction.Balance());
-                //     }
-                // }
+                if (choice == "VIEW")
+                {
+                    Console.WriteLine("Please select which account you would like to view the transcation history of, CHECKING or SAVINGS");
+                    var answer = Console.ReadLine();
+                    if (answer == "CHECKING")
+
+                        foreach (var transaction in transactions)
+                        {
+                            var checkingAccountHistory = transactions.Where(transaction => transaction == "")
+    
+
+                    }
+                }
 
                 // Make option to DEPOSIT 
                 if (choice == "DEPOSIT")
@@ -139,12 +147,13 @@ namespace FirstBankOfSuncoast
                     if (answer == "CHECKING")
                     {
                         Console.WriteLine("How much would you like to deposit");
-                        var depositAmount = Console.ReadLine();
+                        var depositAmount = int.Parse(Console.ReadLine());
 
                         var newTransaction = new Transaction
                         {
-                            Name = "Deposit",
-                            ChangeOfBalance = int.Parse(depositAmount)
+                            TransactionType = "Deposit",
+                            ChangeOfBalance = depositAmount,
+                            AccountType = "Checking"
                         };
                         var newCheckingAccountBalance = checkingAccountBalance + newTransaction.ChangeOfBalance;
                         checkingAccountBalance = newCheckingAccountBalance;
@@ -154,11 +163,12 @@ namespace FirstBankOfSuncoast
                     if (answer == "SAVINGS")
                     {
                         Console.WriteLine("How much would you like to deposit”");
-                        var depositAmount = Console.ReadLine();
+                        var depositAmount = int.Parse(Console.ReadLine());
                         var newTransaction = new Transaction
                         {
-                            Name = "Deposit",
-                            ChangeOfBalance = int.Parse(depositAmount)
+                            TransactionType = "Deposit",
+                            ChangeOfBalance = depositAmount,
+                            AccountType = "Savings"
                         };
                         var newSavingsAccountBalance = savingsAccountBalance + newTransaction.ChangeOfBalance;
                         savingsAccountBalance = newSavingsAccountBalance;
@@ -173,49 +183,54 @@ namespace FirstBankOfSuncoast
                     if (answer == "CHECKING")
                     {
                         Console.WriteLine("How much would you like to withdraw?");
-                        var withdrawAmount = Console.ReadLine();
+                        var withdrawAmount = int.Parse(Console.ReadLine());
                         var newTransaction = new Transaction
                         {
-                            Name = "Withdraw",
-                            ChangeOfBalance = int.Parse(withdrawAmount)
+                            TransactionType = "Withdraw",
+                            ChangeOfBalance = withdrawAmount,
+                            AccountType = "Checking"
                         };
                         //If/else statement needed
                         //If savingsAccountBalance > 0, do formula below,
                         //else “Insufficient funds available to make withdrawal”
-                        var newCheckingAccountBalance = checkingAccountBalance - newTransaction.ChangeOfBalance;
-                        checkingAccountBalance = newCheckingAccountBalance;
-                        Console.WriteLine(checkingAccountBalance);
-                        transactions.Add(newTransaction);
+                        if (withdrawAmount < savingsAccountBalance)
+                        {
+                            var newCheckingAccountBalance = checkingAccountBalance - newTransaction.ChangeOfBalance;
+                            checkingAccountBalance = newCheckingAccountBalance;
+                            Console.WriteLine(checkingAccountBalance);
+                            transactions.Add(newTransaction);
+                        }
+                        else
+                        {
+                            Console.WriteLine("You broke bitch");
+                        }
                     }
                     if (answer == "SAVINGS")
                     {
                         Console.WriteLine("How much would you like to withdraw?");
-                        var withdrawAmount = Console.ReadLine();
+                        var withdrawAmount = int.Parse(Console.ReadLine());
                         var newTransaction = new Transaction
                         {
-                            Name = "Withdraw",
-                            ChangeOfBalance = int.Parse(withdrawAmount)
+                            TransactionType = "Withdraw",
+                            ChangeOfBalance = withdrawAmount,
+                            AccountType = "Savings"
                         };
                         //If/else statement needed
                         //If savingsAccountBalance > 0, do formula below,
                         //else “Insufficient funds available to make withdrawal”
-                        var newSavingsAccountBalance = savingsAccountBalance - newTransaction.ChangeOfBalance;
-                        savingsAccountBalance = newSavingsAccountBalance;
-                        Console.WriteLine(savingsAccountBalance);
-                        transactions.Add(newTransaction);
+                        if (withdrawAmount < savingsAccountBalance)
+                        {
+                            var newSavingsAccountBalance = savingsAccountBalance - newTransaction.ChangeOfBalance;
+                            savingsAccountBalance = newSavingsAccountBalance;
+                            Console.WriteLine(savingsAccountBalance);
+                            transactions.Add(newTransaction);
+                        }
                     }
                 }
+
                 if (choice == "Balance")
                 {
-                    Console.WriteLine("Do you want to check your Checking Account?");
-                    // var answer = Console.ReadLine();
-                    // if (answer == "YES")
-                    // {
-                    //     foreach (var deposit in deposits)
-                    //     {
-                    //         Console.WriteLine(deposit.TransactionHistory());
-                    //         var totalAccount = deposits.Aggregate(0, currentTotal);
-                    //     }
+                    Console.WriteLine($"The balance of your checking account is {checkingAccountBalance} and your savings account balance is {savingsAccountBalance}");
                 }
             }
         }
