@@ -1,117 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using CsvHelper;
 
 namespace FirstBankOfSuncoast
 {
-    // // Create a Customer class
-    // class Customer
-    // {
-    //     CheckingAccount()
-    //     {
-    //         CheckingAccountBalance =
-    //     }
 
-    //     SavingsAccount()
-    //     {
-    //         SavingsAccountBalance =
-    //   }
-    // }
-    // 
-    // 
-    // 
-    // Compute balances by examining all the transactions in the history
     class Transaction
     {
         public string TransactionType { get; set; }
-        public string AccountType { get; set; }
         public int ChangeOfBalance { get; set; }
-
         public string TransactionHistory()
         {
             var transactionHistory = $"{TransactionType} for {ChangeOfBalance}";
             return transactionHistory;
         }
-
     }
     class Program
     {
-        // PROBLEM
-        // 
-        // Create a console app that allows a user to manage savings and checking banking transactions.
-        // The transactions will be saved in a file, using a CSV format to record the data.
-
-        // Example
-        // 
-        // For instance, if a user deposits 10 to their savings, then withdraws 8 from their savings,
-        // then deposits 25 to their checking, they have three transactions to consider. 
-        // Compute the checking and saving balance, using the transaction list, when needed. 
-        // In this case, their savings balance is 2 and their checking balance is 25.
-
-
-        // DATA
-        // 
-        // USER   
-        // CheckingAccount
-        // AccountBalance
-        // SavingsAccount
-        // AccountBalance
-        // TRANSACTION
-        // MONEY
-        // 
-        // A
-        // 
-        // Make a new object with properties:
-        // CheckingAccount
-        // SavingsAccount 
-        // Create a MENU
-        // Make option to DEPOSIT
-        // 
-        // 
-
-        // 
-        // 
-        //         
-
-        //   public string = Transaction
-        // {
-        //  ; 
-        // }
-
-
-
-
 
         static void Main(string[] args)
         {
-
-            var checkingAccountBalance = 0;
             var savingsAccountBalance = 0;
+            var checkingAccountBalance = 0;
+
             // Create a list to to track transfers
             var checkingTransactions = new List<Transaction>();
+
+
+            if (File.Exists("checking.csv"))
+            {
+                var checkingFileReader = new StreamReader("checking.csv");
+                var checkingCsvReader = new CsvReader(checkingFileReader, CultureInfo.InvariantCulture);
+
+                // checkingCsvReader.Configuration.HasHeaderRecord = false;
+
+                checkingTransactions = checkingCsvReader.GetRecords<Transaction>().ToList();
+            }
+            foreach (var check in checkingTransactions)
+            {
+                if (check.TransactionType == "Deposit")
+                {
+                    checkingAccountBalance += check.ChangeOfBalance;
+                }
+                else
+                {
+                    checkingAccountBalance -= check.ChangeOfBalance;
+                }
+            }
+
             var savingsTransactions = new List<Transaction>();
 
 
-            // {
-            // new Transaction
-            // {
-            //   Name = "Deposit",
-            //   ChangeOfBalance = 10
+            if (File.Exists("savings.csv"))
+            {
+                var savingsFileReader = new StreamReader("savings.csv");
+                var savingsCsvReader = new CsvReader(savingsFileReader, CultureInfo.InvariantCulture);
 
-            // },
+                // savingsCsvReader.Configuration.HasHeaderRecord = false;
 
-            // new Transaction
-            // {
-            //   Name = "Deposit",
-            //   ChangeOfBalance = 10,
-            // }
-            // };
+                savingsTransactions = savingsCsvReader.GetRecords<Transaction>().ToList();
+            }
+            foreach (var save in savingsTransactions)
+            {
+                if (save.TransactionType == "Deposit")
+                {
+                    savingsAccountBalance += save.ChangeOfBalance;
+                }
+                else
+                {
+                    savingsAccountBalance -= save.ChangeOfBalance;
+                }
+            }
 
 
-            Console.WriteLine("Welcome to Wutang Financial");
-
+            Console.WriteLine("Welcome to the First Bank of Suncoast");
             var hasQuitTheApplication = false;
-
             while (hasQuitTheApplication == false)
             {
                 // Show them a menu of options they can do
@@ -123,45 +89,24 @@ namespace FirstBankOfSuncoast
                 Console.WriteLine("QUIT - Quit the program!");
                 Console.WriteLine();
                 Console.Write("Choice: ");
-                var choice = Console.ReadLine();
-
-                if (choice == "VIEW")
+                var choice = Console.ReadLine().ToUpper();
+                if (choice == "QUIT")
                 {
-                    Console.WriteLine("Please select which account you would like to view the transcation history of, CHECKING or SAVINGS");
-                    var answer = Console.ReadLine();
-                    if (answer == "CHECKING")
-                    {
-                        foreach (var transaction in checkingTransactions)
-                        {
-                            Console.WriteLine(transaction.TransactionHistory());
-
-                        }
-                    }
-                    if (answer == "SAVINGS")
-                    {
-                        foreach (var transaction in savingsTransactions)
-                        {
-                            Console.WriteLine(transaction.TransactionHistory());
-
-                        }
-                    }
+                    hasQuitTheApplication = true;
                 }
 
-                // Make option to DEPOSIT 
                 if (choice == "DEPOSIT")
                 {
                     Console.WriteLine("Please select which account to deposit into, CHECKING or SAVINGS");
-                    var answer = Console.ReadLine();
+                    var answer = Console.ReadLine().ToUpper();
                     if (answer == "CHECKING")
                     {
                         Console.WriteLine("How much would you like to deposit");
                         var depositAmount = int.Parse(Console.ReadLine());
-
                         var newTransaction = new Transaction
                         {
                             TransactionType = "Deposit",
-                            ChangeOfBalance = depositAmount,
-                            AccountType = "Checking"
+                            ChangeOfBalance = depositAmount
                         };
                         var newCheckingAccountBalance = checkingAccountBalance + newTransaction.ChangeOfBalance;
                         checkingAccountBalance = newCheckingAccountBalance;
@@ -170,13 +115,12 @@ namespace FirstBankOfSuncoast
                     }
                     if (answer == "SAVINGS")
                     {
-                        Console.WriteLine("How much would you like to deposit”");
+                        Console.WriteLine("How much would you like to deposit");
                         var depositAmount = int.Parse(Console.ReadLine());
                         var newTransaction = new Transaction
                         {
                             TransactionType = "Deposit",
-                            ChangeOfBalance = depositAmount,
-                            AccountType = "Savings"
+                            ChangeOfBalance = depositAmount
                         };
                         var newSavingsAccountBalance = savingsAccountBalance + newTransaction.ChangeOfBalance;
                         savingsAccountBalance = newSavingsAccountBalance;
@@ -187,7 +131,7 @@ namespace FirstBankOfSuncoast
                 if (choice == "WITHDRAW")
                 {
                     Console.WriteLine("Please select which account to withdraw from, CHECKING or SAVINGS");
-                    var answer = Console.ReadLine();
+                    var answer = Console.ReadLine().ToUpper();
                     if (answer == "CHECKING")
                     {
                         Console.WriteLine("How much would you like to withdraw?");
@@ -195,13 +139,10 @@ namespace FirstBankOfSuncoast
                         var newTransaction = new Transaction
                         {
                             TransactionType = "Withdraw",
-                            ChangeOfBalance = withdrawAmount,
-                            AccountType = "Checking"
+                            ChangeOfBalance = withdrawAmount
                         };
                         //If/else statement needed
-                        //If savingsAccountBalance > 0, do formula below,
-                        //else “Insufficient funds available to make withdrawal”
-                        if (withdrawAmount < savingsAccountBalance)
+                        if (withdrawAmount < checkingAccountBalance)
                         {
                             var newCheckingAccountBalance = checkingAccountBalance - newTransaction.ChangeOfBalance;
                             checkingAccountBalance = newCheckingAccountBalance;
@@ -210,7 +151,7 @@ namespace FirstBankOfSuncoast
                         }
                         else
                         {
-                            Console.WriteLine("You broke bitch");
+                            Console.WriteLine("Insufficient funds to perform transaction.");
                         }
                     }
                     if (answer == "SAVINGS")
@@ -220,12 +161,9 @@ namespace FirstBankOfSuncoast
                         var newTransaction = new Transaction
                         {
                             TransactionType = "Withdraw",
-                            ChangeOfBalance = withdrawAmount,
-                            AccountType = "Savings"
+                            ChangeOfBalance = withdrawAmount
                         };
                         //If/else statement needed
-                        //If savingsAccountBalance > 0, do formula below,
-                        //else “Insufficient funds available to make withdrawal”
                         if (withdrawAmount < savingsAccountBalance)
                         {
                             var newSavingsAccountBalance = savingsAccountBalance - newTransaction.ChangeOfBalance;
@@ -233,26 +171,52 @@ namespace FirstBankOfSuncoast
                             Console.WriteLine(savingsAccountBalance);
                             savingsTransactions.Add(newTransaction);
                         }
-                    }
-                }
+                        else
+                        {
+                            Console.WriteLine("Insufficient funds to perform transaction.");
+                        }
 
-                if (choice == "Balance")
+                    }
+
+                }
+                if (choice == "BALANCE")
                 {
                     Console.WriteLine($"The balance of your checking account is {checkingAccountBalance} and your savings account balance is {savingsAccountBalance}");
                 }
+                if (choice == "TRANSACTIONS")
+                {
+                    Console.WriteLine("View transaction history of CHECKING or SAVINGS?");
+                    var answer = Console.ReadLine().ToUpper();
+                    if (answer == "CHECKING")
+                    {
+                        foreach (var transaction in checkingTransactions)
+                        {
+                            Console.WriteLine(transaction.TransactionHistory());
+                        }
+                    }
+                    if (answer == "SAVINGS")
+                    {
+                        foreach (var transaction in savingsTransactions)
+                        {
+                            Console.WriteLine(transaction.TransactionHistory());
+                        }
+                    }
+                }
+
+
+                Console.WriteLine(" GOODBYE ");
             }
+            var checkingFileWriter = new StreamWriter("checking.csv");
+            var checkingCsvWriter = new CsvWriter(checkingFileWriter, CultureInfo.InvariantCulture);
+            checkingCsvWriter.WriteRecords(checkingTransactions);
+            checkingFileWriter.Close();
+
+            var savingsFileWriter = new StreamWriter("savings.csv");
+            var savingsCsvWriter = new CsvWriter(savingsFileWriter, CultureInfo.InvariantCulture);
+            savingsCsvWriter.WriteRecords(savingsTransactions);
+            savingsFileWriter.Close();
         }
+
+
     }
-
-
-    // if (choice == "BALAnce")
-    // {
-
-    // }
-    // else
-    // {
-    //     Console.WriteLine("Goodbye");
-    // }
 }
-
-
