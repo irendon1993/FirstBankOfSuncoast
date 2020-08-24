@@ -183,7 +183,7 @@ namespace FirstBankOfSuncoast
                 {
                     Console.WriteLine($"The balance of your checking account is {checkingAccountBalance} and your savings account balance is {savingsAccountBalance}");
                 }
-                if (choice == "TRANSACTIONS")
+                if (choice == "VIEW")
                 {
                     Console.WriteLine("View transaction history of CHECKING or SAVINGS?");
                     var answer = Console.ReadLine().ToUpper();
